@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react'
 import '../../../assets/forms.scss'
+import AppConfig from '../modules/AppConfig'
 
 function InsertUserForm() {
   const [access, setAccess] = useState(0)
   const [name, setName] = useState('')
   const [lastName, setLastName] = useState('')
+  const appConfig = new AppConfig()
 
   const handleSend = (e) => {
     e.preventDefault()
@@ -15,10 +17,21 @@ function InsertUserForm() {
       setLastName(form[2].value)
     })
   }
+  
+  const tryToSave = (data) => {
+    const form = document.getElementById('userForm')
+    console.log("Tentando salvar...")
+    appConfig.mainDatabase.createUser(data)
+  }
 
   useEffect(() => {
     if (access !== 0 && name !== '' && lastName !== '') {
-      console.log(access, name, lastName)
+      const data = {
+        usr_nvl_acesso: Number(access),
+        usr_nome: name,
+        usr_sobrenome: lastName
+      }
+      tryToSave(data)
     }
   }, [access, name, lastName])
 

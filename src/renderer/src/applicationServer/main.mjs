@@ -58,6 +58,16 @@ app.get('/insertuser', (req, res) => {
   res.json(response)
 })
 
+app.get('/listusers', (req, res) => {
+  db.all('SELECT * FROM tb_usuario', (err, rows) => {
+    if(err){
+      res.status(500).json({ error: err.message })
+      return
+    }
+    res.json({ users: rows })
+  })
+})
+
 app.listen(port, () => {
   console.log(`O servidor esta em modo de escuta em http://localhost:${port}`)
 })

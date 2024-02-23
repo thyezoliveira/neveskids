@@ -17,7 +17,8 @@
     "build:mac": "npm run build && electron-builder --mac",
     "build:linux": "npm run build && electron-builder --linux",
     "server": "node ./src/renderer/src/applicationServer/main.mjs --prefix server",
-    "reactserver": "concurrently \"npm run server\" \"npm run dev\""
+    "reactserver": "concurrently \"npm run server\" \"npm run dev\"",
+    "rebuild": "electron-rebuild -f -w sqlite3"
   },
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
@@ -26,14 +27,10 @@
     "core-js": "^3.36.0",
     "cors": "^2.8.5",
     "express": "^4.18.2",
-    "mysql": "^2.18.1",
-    "mysql2": "^3.9.1",
     "pg-hstore": "^2.3.4",
     "reflect-metadata": "^0.2.1",
     "sass": "^1.71.0",
-    "sequelize": "^6.37.1",
-    "sqlite3": "^5.1.7",
-    "typeorm": "^0.3.20"
+    "sqlite3": "^5.1.7"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.2",
@@ -42,6 +39,7 @@
     "@vitejs/plugin-react": "^4.2.1",
     "electron": "^28.2.0",
     "electron-builder": "^24.9.1",
+    "electron-rebuild": "^3.2.9",
     "electron-vite": "^2.0.0",
     "eslint": "^8.56.0",
     "eslint-plugin-react": "^7.33.2",
