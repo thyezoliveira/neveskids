@@ -1,0 +1,44 @@
+@import "./base";
+
+form#userForm{
+    background-color: $color-secondary;
+
+    input{
+        margin: 8px;
+        padding: 8px;
+        border-radius: 4px;
+        border: 2px solid $color-primary;
+        outline: none;
+        transition: border 0.1s ease-in-out;
+    }
+
+    input:focus{
+        border: 3px solid $color-primary;
+    }
+
+    button{
+        margin: 10px;
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid $color-primary;
+        background-color: $color-primary;
+        color: $color-secondary;
+        transition: all 0.2s ease-in-out;
+
+        &:hover{
+            background-color: $color-success;
+            color: $color-dark;
+            cursor: pointer;
+        }
+    }
+
+    select{
+        margin: 8px;
+        padding: 8px;
+        border-radius: 4px;
+        border: 2px solid $color-primary;
+        outline: none;
+        transition: border 0.1s ease-in-out;
+    }
+
+}
