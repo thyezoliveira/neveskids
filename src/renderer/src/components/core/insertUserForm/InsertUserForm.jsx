@@ -1,54 +1,76 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import '../../../assets/forms.scss'
 import AppConfig from '../modules/AppConfig'
 
 function InsertUserForm() {
-  const [access, setAccess] = useState(0)
+  const appConfig = new AppConfig()
+  const [insertPass, setInsertPass] = useState(false)
+  const [access, setAccess] = useState(1)
   const [name, setName] = useState('')
   const [lastName, setLastName] = useState('')
-  const appConfig = new AppConfig()
+  const [password, setPassword] = useState('')
+  const [data, setData] = useState(undefined)
 
   const handleSend = (e) => {
     e.preventDefault()
-    const form = document.getElementById('userForm')
-    form.addEventListener('submit', () => {
-      setAccess(form[0].value)
-      setName(form[1].value)
-      setLastName(form[2].value)
-    })
-  }
-  
-  const tryToSave = (data) => {
-    const form = document.getElementById('userForm')
-    console.log("Tentando salvar...")
-    appConfig.mainDatabase.createUser(data)
+    inputPassword()
   }
 
-  useEffect(() => {
-    if (access !== 0 && name !== '' && lastName !== '') {
-      const data = {
-        usr_nvl_acesso: Number(access),
-        usr_nome: name,
-        usr_sobrenome: lastName
-      }
-      tryToSave(data)
-    }
-  }, [access, name, lastName])
+  const inputPassword = () => {
+    setInsertPass(true)
+  }
+
+  const tryToSave = (e) => {
+    e.preventDefault()
+    setTimeout(() => {
+      console.log('Tentando salvar...', data)
+      appConfig.mainDatabase.createUser(data)
+    }, 2000)
+  }
 
   return (
     <div>
-      <form id="userForm" onSubmit={(e) => handleSend(e)}>
-        <label htmlFor="access">Test</label>
-        <select id="access">
-          <option value="1">Administrador</option>
-          <option value="2">Usuário</option>
-        </select>
-        <label htmlFor="name">Nome</label>
-        <input id="name" type="text" placeholder="Nome" />
-        <label htmlFor="lname">Sobrenome</label>
-        <input id="lname" type="text" placeholder="Sobrenome" />
-        <button type="submit">Cadastrar</button>
-      </form>
+      {!insertPass ? (
+        <form id="userForm" onSubmit={(e) => handleSend(e)}>
+          <label htmlFor="access">Test</label>
+          <select defaultValue="1" id="access" onChange={(e) => setAccess(Number(e.target.value))}>
+            <option value="1">Administrador</option>
+            <option value="2">Usuário</option>
+          </select>
+          <label htmlFor="name">Nome</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Nome"
+            onChange={(e) => setName(e.target.value)}
+          />
+          <label htmlFor="lname">Sobrenome</label>
+          <input
+            id="lname"
+            type="text"
+            placeholder="Sobrenome"
+            onChange={(e) => setLastName(e.target.value)}
+          />
+          <button type="submit">Avançar</button>
+        </form>
+      ) : (
+        <form id="passForm" onSubmit={(e) => tryToSave(e)}>
+          <input
+            type="text"
+            placeholder="senha"
+            onChange={(e) => {
+              setPassword(e.target.value)
+              setData({
+                usr_nvl_acesso: access,
+                usr_nome: name,
+                usr_sobrenome: lastName,
+                usr_senha: password
+              })
+            }}
+          />
+          <button type="submit">Salvar</button>
+        </form>
+      )}
     </div>
   )
 }

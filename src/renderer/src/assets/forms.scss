@@ -1,26 +1,26 @@
 @import "./base";
 
-form#userForm{
+form#userForm, form#passForm{
     background-color: $color-secondary;
 
     input{
         margin: 8px;
-        padding: 8px;
+        padding: $pad-default;
         border-radius: 4px;
-        border: 2px solid $color-primary;
+        border: $bord-default;
         outline: none;
         transition: border 0.1s ease-in-out;
     }
 
     input:focus{
-        border: 3px solid $color-primary;
+        border: $bord-default;
     }
 
     button{
         margin: 10px;
-        padding: 10px;
+        padding: $pad-default;
         border-radius: 5px;
-        border: 1px solid $color-primary;
+        border: $bord-default;
         background-color: $color-primary;
         color: $color-secondary;
         transition: all 0.2s ease-in-out;
@@ -34,9 +34,9 @@ form#userForm{
 
     select{
         margin: 8px;
-        padding: 8px;
+        padding: $pad-default;
         border-radius: 4px;
-        border: 2px solid $color-primary;
+        border: $bord-default;
         outline: none;
         transition: border 0.1s ease-in-out;
     }

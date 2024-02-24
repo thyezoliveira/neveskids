@@ -18,13 +18,19 @@ class DBConnection {
       .then((data) => console.log(data))
   }
 
-  createUser({usr_nvl_acesso, usr_nome, usr_sobrenome}) {
+  createUser(data) {
     fetch(
-      `${this.databaseUrl}/insertuser?usr_nvl_acesso=${usr_nvl_acesso}&usr_nome=${usr_nome}&usr_sobrenome=${usr_sobrenome}`,
+      `${this.databaseUrl}/insertuser?usr_nvl_acesso=${data.usr_nvl_acesso}&usr_nome=${data.usr_nome}&usr_sobrenome=${data.usr_sobrenome}&usr_senha=${data.usr_senha}`,
       this.options
     )
       .then((response) => response.json())
-      .then((data) => console.log("DADOS Salvos.", data))
+      .then((data) => console.log('DADOS Salvos.', data))
+  }
+
+  getUser(usr_id) {
+    fetch(`${this.databaseUrl}/getuser?usr_id=${usr_id}`)
+      .then((response) => response.json())
+      .then((data) => console.log('DADOS recuperados.', data))
   }
 }
 

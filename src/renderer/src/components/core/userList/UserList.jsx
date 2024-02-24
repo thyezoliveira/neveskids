@@ -1,7 +1,9 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
+import '../../../assets/userlist.scss'
 
 function UserList() {
-  let allUsers = []
+  const [allUsers, setAllUsers] = useState([])
+  let fetched = false
   const options = {
     method: 'GET',
     mode: 'cors',
@@ -10,35 +12,40 @@ function UserList() {
     }
   }
   
-  const getUsers = () => {
+  const fetchUsers = () => {
     const url = "http://localhost:2024/listusers"
     fetch(url, options)
       .then((response) => response.json())
       .then((data) => {
-        allUsers = data.users
+        setAllUsers(data.users)
       })
-      constructElements()
   }
 
   const constructElements = () => {
-    console.log(allUsers)
+    return allUsers.map((user) => 
+      <li className="userlist_item" key={user.usr_id}>
+        {user.usr_id}: {user.usr_nome} {user.usr_sobrenome}
+      </li>
+    )
   }
 
-  // const constructList = () => {
-  //   return (
-  //     <ul>
-  //       {constructElements()}
-  //     </ul>
-  //   )
-  // }
+  const constructList = () => {
+    return <ul id="userlist_ul">{constructElements()}</ul>
+  }
 
   useEffect(() => {
-    getUsers()
-  })
+    if (!fetched) {
+      fetchUsers()
+      fetched = true
+    }
+  }, [])
 
   return (
     <>
-      <p>UserList</p>
+      <h1>UserList</h1>
+      <section id="userlist">
+        {constructList()}
+      </section>
     </>
   )
 }

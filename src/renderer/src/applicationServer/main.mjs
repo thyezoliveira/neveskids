@@ -15,6 +15,11 @@ const corsOptions = {
   optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 }
 
+const dbpath = path.join(__dirname, 'neveskids.db')
+if (db === null) {
+  db = new sqlite3.Database(dbpath)
+}
+
 app.use(cors(corsOptions))
 
 app.use((req, res, next) => {
@@ -23,10 +28,6 @@ app.use((req, res, next) => {
 })
 
 app.get('/createdb', (req, res) => {
-  const dbpath = path.join(__dirname, 'neveskids.db')
-  if (db === null) {
-    db = new sqlite3.Database(dbpath)
-  }
   db.serialize(() => {
     db.run(
       'CREATE TABLE IF NOT EXISTS tb_usuario (usr_id INTEGER PRIMARY KEY AUTOINCREMENT, usr_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP, usr_nvl_acesso INTEGER(1), usr_nome TEXT, usr_sobrenome TEXT, usr_senha TEXT(100))'
@@ -44,18 +45,34 @@ app.get('/insertuser', (req, res) => {
   const usr_nome = req.query.usr_nome
   const usr_sobrenome = req.query.usr_sobrenome
   const usr_senha = req.query.usr_senha
-  var newUser = null
   db.serialize(() => {
-    newUser = db.run(
-      `INSERT INTO tb_usuario (usr_nvl_acesso, usr_nome, usr_sobrenome, usr_senha) VALUES (${usr_nvl_acesso}, '${usr_nome}', '${usr_sobrenome}', '${usr_senha}')`
+    db.run(
+      `INSERT INTO tb_usuario (usr_nvl_acesso, usr_nome, usr_sobrenome, usr_senha) VALUES (${usr_nvl_acesso}, '${usr_nome}', '${usr_sobrenome}', '${usr_senha}')`,
+      function (err) {
+        if (err) {
+          console.error(err.message)
+          return res.status(500).json({ error: 'Erro ao inserir usuário.' })
+        }
+
+        const id = this.lastID
+
+        db.run(`SELECT * FROM tb_usuario WHERE usr_id = ?`, [id], function (err, result) {
+          if (err) {
+            console.log(err.message)
+            return res.status(500).json({ error: 'Erro ao carregar ultimo usuario inserido.' })
+          }
+
+          console.log('Last ID: ', id, result)
+          const response = {
+            action: 'Usuario inserido com sucesso!',
+            method: 'GET',
+            usr_id: id
+          }
+          res.json(response)
+        })
+      }
     )
   })
-  const response = {
-    action: 'Usuario inserido com sucesso!',
-    method: 'GET',
-    newUser: newUser.user_id
-  }
-  res.json(response)
 })
 
 app.get('/listusers', (req, res) => {
@@ -65,6 +82,17 @@ app.get('/listusers', (req, res) => {
       return
     }
     res.json({ users: rows })
+  })
+})
+
+app.get('/getuser', (req, res) => {
+  const usr_id = req.query.usr_id
+  db.all('SELECT * FROM tb_usuario WHERE usr_id = ?', usr_id, function (err, rows) {
+    if(err){
+      res.status(500).json({ error: err.message })
+      return
+    }
+    res.json({ user: rows })
   })
 })
 
