@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import '../../../assets/forms.scss'
 import AppConfig from '../modules/AppConfig'
+import PropTypes from 'prop-types'
 
-function InsertUserForm() {
+function InsertUserForm({ setRefresh }) {
   const appConfig = new AppConfig()
   const [insertPass, setInsertPass] = useState(false)
   const [access, setAccess] = useState(1)
@@ -10,6 +11,7 @@ function InsertUserForm() {
   const [lastName, setLastName] = useState('')
   const [password, setPassword] = useState('')
   const [data, setData] = useState(undefined)
+  const [feedback, setFeedback] = useState('')
 
   const handleSend = (e) => {
     e.preventDefault()
@@ -24,8 +26,9 @@ function InsertUserForm() {
     e.preventDefault()
     setTimeout(() => {
       console.log('Tentando salvar...', data)
-      appConfig.mainDatabase.createUser(data)
-    }, 2000)
+      appConfig.mainDatabase.createUser(data, setFeedback)
+      setRefresh(true)
+    }, 1000)
   }
 
   return (
@@ -42,6 +45,7 @@ function InsertUserForm() {
             id="name"
             type="text"
             placeholder="Nome"
+            autoComplete="true"
             onChange={(e) => setName(e.target.value)}
           />
           <label htmlFor="lname">Sobrenome</label>
@@ -69,10 +73,15 @@ function InsertUserForm() {
             }}
           />
           <button type="submit">Salvar</button>
+          {feedback != '' ? <p>{feedback}</p> : <>f</>}
         </form>
       )}
     </div>
   )
+}
+
+InsertUserForm.propTypes = {
+  setRefresh: PropTypes.func.isRequired
 }
 
 export default InsertUserForm

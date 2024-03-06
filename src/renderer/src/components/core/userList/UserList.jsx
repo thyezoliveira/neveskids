@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react"
 import '../../../assets/userlist.scss'
+import PropTypes from "prop-types"
 
-function UserList() {
+function UserList({ refresh }) {
   const [allUsers, setAllUsers] = useState([])
   let fetched = false
   const options = {
@@ -24,7 +25,7 @@ function UserList() {
   const constructElements = () => {
     return allUsers.map((user) => 
       <li className="userlist_item" key={user.usr_id}>
-        {user.usr_id}: {user.usr_nome} {user.usr_sobrenome}
+        #{user.usr_id} | Usuario: {user.usr_nome}
       </li>
     )
   }
@@ -38,16 +39,22 @@ function UserList() {
       fetchUsers()
       fetched = true
     }
+
+    if (refresh) {
+      fetchUsers()
+    }
   }, [])
 
   return (
     <>
       <h1>UserList</h1>
-      <section id="userlist">
-        {constructList()}
-      </section>
+      <section id="userlist">{constructList()}</section>
     </>
   )
+}
+
+UserList.propTypes = {
+  refresh: PropTypes.bool.isRequired,
 }
 
 export default UserList

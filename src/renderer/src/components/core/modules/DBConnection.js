@@ -13,18 +13,16 @@ class DBConnection {
   }
 
   connect() {
-    fetch(`${this.databaseUrl}/createdb`, this.options)
-      .then((response) => response.json())
-      .then((data) => console.log(data))
+    fetch(`${this.databaseUrl}/createusertb`, this.options)
   }
 
-  createUser(data) {
+  createUser(data, setFeedback) {
     fetch(
       `${this.databaseUrl}/insertuser?usr_nvl_acesso=${data.usr_nvl_acesso}&usr_nome=${data.usr_nome}&usr_sobrenome=${data.usr_sobrenome}&usr_senha=${data.usr_senha}`,
       this.options
     )
       .then((response) => response.json())
-      .then((data) => console.log('DADOS Salvos.', data))
+      .then((data) => setFeedback(data.action))
   }
 
   getUser(usr_id) {

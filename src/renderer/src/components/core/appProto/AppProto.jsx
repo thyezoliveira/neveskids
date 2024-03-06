@@ -1,16 +1,17 @@
 import AppConfig from '../modules/AppConfig.js'
 import InsertUserForm from '../insertUserForm/InsertUserForm'
 import UserList from '../userList/UserList.jsx'
+import LoginScreen from '../loginScreen/LoginScreen.jsx'
+import { useState } from 'react'
 
 function AppProto() {
   const sis = new AppConfig()
+  const [refresh, setRefresh] = useState(false)
+  const [login, setLogin] = useState(false)
   return (
-    <div>
-      <h1>{sis.sistema_id}</h1>
-      <p>{sis.sistema_versao}</p>
-      <InsertUserForm />
-      <UserList/>
-    </div>
+    <>
+      <LoginScreen />
+    </>
   )
 }
 
