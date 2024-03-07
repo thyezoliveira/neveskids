@@ -1,5 +1,6 @@
 import '../../../assets/login.scss'
 import logo from './logo_asset.png'
+import bg from './bg_asset.png'
 
 function LoginScreen() {
   return (
@@ -8,7 +9,9 @@ function LoginScreen() {
         <div className="background">
           <div className="bgPhoto">
             <div className="effect"></div>
-            <div className="photoLayer"></div>
+            <div className="photoLayer">
+              <img src={bg} alt="bg" />
+            </div>
           </div>
           <div className="sideContrast">
             <img className="logo" src={logo} alt="logo" />
