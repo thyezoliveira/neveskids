@@ -1,0 +1,166 @@
+@import "./base";
+
+section#login {
+    position: relative;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+    
+    div.background {
+        height: 100%;
+        position: relative;
+        z-index: 0;
+        overflow: hidden;
+
+        div.bgPhoto {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 100%;
+            width: 75%;
+
+            div.formLayer {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+                width: 50%;
+                z-index: 3;
+
+                input {
+                    font-family: 'Courier New', Courier, monospace;
+                    font-size: 16px;
+                    color: $color-dark;
+                    width: 100%;
+                    max-width: 300px;
+                    height: 32px;
+                    padding: 24px;
+                    margin: 8px 0;
+                    border-radius: 4px;
+                    outline: none;
+                    filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.4));
+                    transition: all 0.2s ease-in-out;
+
+                    &:focus {
+                        border: $bord-default;
+                    }
+
+                    &::placeholder {
+                        color: $color-primary;
+                    }
+                }
+
+                input[type="submit"] {
+                    background-color: $color-secondary;
+                    color: $color-light;
+                    font-weight: bold;
+                    font-size: 18px;
+                    cursor: pointer;
+
+                    &:hover {
+                        background-color: $color-primary;
+                    }
+                }
+            }
+
+            div.effect {
+                position: absolute;
+                background-color: $color-primary-op-05;
+                width: 100%;
+                height: 100%;
+                z-index: 2;
+                backdrop-filter: blur(4px);
+            }
+
+            div.photoLayer {
+                position: absolute;
+                z-index: 1;
+
+                img {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: fill;
+                }
+            }
+
+        }
+
+        div.sideContrast {
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 100%;
+            width: 25%;
+            
+            img.logo {
+                position: absolute;
+                width: 300px;
+                transform: translate(-57%, 100px);
+                filter: drop-shadow(0 4px 4px rgba(0, 0, 0, 0.4));
+                z-index: 3;
+                transition: all 0.5s ease;
+
+                @media screen and (max-width: 768px) {
+                    width: 200px;
+                    transform: translate(-57%, 100px);                    
+                }
+
+                @media screen and (max-width: 480px) {
+                    width: 150px;
+                    transform: translate(-57%, 100px);                    
+                }
+            }
+
+            p.release {
+                position: absolute;
+                width: 100%;
+                transform: translate(57px, 150px);
+                transition: all 0.5s ease;
+
+                span {
+                    font-family: 'Courier New', Courier, monospace;
+                    font-weight: bold;
+                    font-size: 10pt;
+                }
+
+                span.sysType {
+                    color: $color-primary;
+                    padding-right: $pad-default;
+                    font-weight: 900;
+                }
+
+                span.sysVer {
+                    color: $color-dark;
+                }
+
+                @media screen and (max-width: 768px) {
+                    transform: translate(16px, 135px);
+                }
+
+                @media screen and (max-width: 480px) {
+                    transform: translate(8px, 130px);
+                }
+            }
+
+            p.credit {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                text-align: center;
+                padding: 32px 0;
+                color: $color-dark;
+                font-family: Arial, Helvetica, sans-serif;
+                font-size: 9pt;
+                font-weight: bold;
+                
+                span {
+                    font-weight: 100;
+                    font-size: 7pt;
+                    color: $color-dark;
+                    letter-spacing: 3px;
+                }
+            }
+        }
+    }
+}

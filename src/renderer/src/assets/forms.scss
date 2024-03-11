@@ -1,0 +1,44 @@
+@import "./base";
+
+form#userForm, form#passForm{
+    background-color: $color-secondary;
+
+    input{
+        margin: 8px;
+        padding: $pad-default;
+        border-radius: 4px;
+        border: $bord-default;
+        outline: none;
+        transition: border 0.1s ease-in-out;
+    }
+
+    input:focus{
+        border: $bord-default;
+    }
+
+    button{
+        margin: 10px;
+        padding: $pad-default;
+        border-radius: 5px;
+        border: $bord-default;
+        background-color: $color-primary;
+        color: $color-secondary;
+        transition: all 0.2s ease-in-out;
+
+        &:hover{
+            background-color: $color-success;
+            color: $color-dark;
+            cursor: pointer;
+        }
+    }
+
+    select{
+        margin: 8px;
+        padding: $pad-default;
+        border-radius: 4px;
+        border: $bord-default;
+        outline: none;
+        transition: border 0.1s ease-in-out;
+    }
+
+}

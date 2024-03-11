@@ -1,0 +1,17 @@
+$color-primary: #CF0E0E;
+$color-primary-op-05: rgba(207, 14, 14, 0.5);
+$color-secondary: #fbb908;
+$color-success: #66B59D;
+$color-dark: #606060;
+$color-light: #f5f5f5;
+$pad-default: 8px;
+$bord-default: solid 2px $color-primary;
+
+*{
+  border:0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+}

@@ -1,0 +1,14 @@
+@import "./base";
+
+section#userlist {
+    height: 300px;
+    overflow-y: scroll;
+    ul#userlist_ul {
+        li.userlist_item {
+            background-color: $color-dark;
+            color: $color-secondary;
+            border: $bord-default;
+            padding: $pad-default;
+        }
+    }
+}
